@@ -1,8 +1,6 @@
 package com.example.accountManagement.controller;
 
-import com.example.accountManagement.model.Operation;
-import com.example.accountManagement.model.User;
-import com.example.accountManagement.model.UserAccount;
+import com.example.accountManagement.model.*;
 import com.example.accountManagement.service.AccountManagementService;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -50,14 +48,14 @@ public class AccountManagementController {
         return accountManagementService.getAllUserAccounts(userId);
     }
 
-    @PostMapping(path = "account/withdraw")
-    public void withdraw(@RequestBody long accountId, double amount) {
-        accountManagementService.withdraw(accountId, amount);
+    @PostMapping(path = "account/withdraw", consumes = "application/json", produces = "application/json")
+    public void withdraw(@RequestBody WithdrawRequest request) {
+        accountManagementService.withdraw(request.getAccountId(), request.getAmount());
     }
 
-    @PostMapping(path = "account/deposit")
-    public void deposit(@RequestBody long accountId, double amount) {
-        accountManagementService.deposit(accountId, amount);
+    @PostMapping(path = "account/deposit", consumes = "application/json", produces = "application/json")
+    public void deposit(@RequestBody DepositRequest request) {
+        accountManagementService.deposit(request.getAccountId(), request.getAmount());
     }
 
     @PostMapping(path = "account/balance")
